@@ -1,0 +1,5 @@
+ /* Adjust the width of the popup container */
+ #popup-container {
+    width: 340px;
+    display: block
+  }

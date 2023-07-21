@@ -1,0 +1,210 @@
+/* dashboard.css */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+
+/* Body font (use either DM Sans or Roboto) */
+body {
+    font-family: 'Roboto', sans-serif; /* Use Roboto font */
+  }
+  
+  /* Heading font (use either DM Sans or Roboto) */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'DM Sans', sans-serif; /* Use DM Sans font */
+    /* font-family: 'Roboto', sans-serif; */ /* Use Roboto font */
+  }
+
+/* Center the container horizontally and add some padding */
+/* Center the container horizontally and add some padding */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+  
+.heading {
+    font-size: 4rem; /* Increase the font size */
+  font-weight: bold; /* Set font weight to bold */
+  text-align: center; /* Center the text */
+  background-clip: text; /* Set the background-clip to text for the gradient effect */
+  -webkit-background-clip: text; /* For Safari/Chrome */
+  color: transparent; /* Make the text transparent to reveal the gradient */
+  background-image: linear-gradient(to right, #FFA000, #FF99CC); /* Add a gradient to the text */
+  }
+
+  /* #FF8E53 10%, #FFA000  */
+
+  /* Style the grid layout for the left and right sections */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    margin-top: 40px;
+  }
+  
+  /* Media query for larger screens (md:grid-cols-2) */
+  @media (min-width: 768px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  /* Styling for the left side (Form Card) */
+  .form-card {
+    width: 400px;
+    max-width: 100%;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-card .card-body {
+    padding: 20px;
+  }
+  
+  .form-card h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  
+  .form-card input,
+  .form-card textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 16px;
+  }
+  
+  /* Button Container */
+.button-container-add {
+    max-width: 80%;
+    margin-left: 10%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+
+  .form-card .btn-primary {
+    margin-bottom: 15px;
+    min-width: 120px;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: green;
+    font-family: 'DM Sans', sans-serif;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  .cancel-container button {
+    min-width: 120px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    padding: 12px;
+    font-weight: bold;
+    font-family: 'DM Sans', sans-serif; 
+    border-radius: 8px;
+    border-color: grey;
+    color: black;
+  }
+
+  
+  .form-card button:hover {
+    background-color: blue;
+  }
+
+  .error {
+    text-align: center;
+    font-size: 18px;
+    color: red;
+  }
+  
+  /* Styling for the right side (Prompts Cards List) */
+  .prompts-list {
+    width: 600px;
+    max-width: 100%;
+  }
+  
+  .prompts-list .card-body {
+    padding: 20px;
+  }
+  
+  .prompts-list h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+  
+  .prompts-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .prompts-list li {
+    margin-bottom: 20px;
+  }
+  
+  .prompts-list .border {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+  }
+  
+  .prompts-list h3 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .prompts-list .text-gray-600 {
+    color: #666;
+  }
+  
+  .prompts-list .btn-danger {
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  .prompts-list .btn-success {
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+  
+/* Button Container */
+.button-container-update {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+  }
+
+/* Logout Container */
+.logout-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  
+  .logout-container button {
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'DM Sans', sans-serif; 
+    border-radius: 12px;
+    color: red;
+    padding: 8px 12px;
+  }

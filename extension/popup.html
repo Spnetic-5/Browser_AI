@@ -1,0 +1,63 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Popup</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link href="./popup.css" rel="stylesheet" />
+  </head>
+
+  <body class="p-4">
+    <div
+      id="popup-container"
+      class="max-w-lg mx-auto shadow-md rounded p-4 bg-white"
+    >
+      <h1 class="text-xl font-bold mb-4 text-center text-green-500">
+        BrowserAI
+      </h1>
+      <!-- Hide login elements for logged-in users -->
+      <div id="login-container" class="mb-4">
+        <label for="api-key-input" class="block font-semibold mb-1">OpenAI API Key:</label>
+        <input
+          type="text"
+          id="api-key-input"
+          class="w-full border rounded py-2 px-3"
+          placeholder="Enter your OpenAI API Key"
+        />
+        <label class="block font-semibold mt-2 mb-1">BrowserAI Email ID (optional)</label>
+        <input
+          type="text"
+          id="email"
+          class="w-full border rounded py-2 px-3"
+          placeholder="Enter your Email address"
+        />
+
+        <label class="block font-semibold mt-2 mb-1">BrowserAI Password (optional)</label>
+        <input
+          type="password"
+          id="pass"
+          class="w-full border rounded py-2 px-3"
+          placeholder="Enter your Password"
+        />
+
+        <button
+          id="save-api-key"
+          class="w-full bg-green-500 text-white font-semibold py-2 px-4 mt-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Login
+        </button>
+      </div>
+      <div id="feedback-container" class="text-center text-red-500">You are not Logged In!</div>
+      <!-- End of login elements -->    
+
+    <script src="popup.js"></script>
+
+  </body>
+</html>
+
+<!DOCTYPE html>
+<html>
+
