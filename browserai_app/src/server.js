@@ -3,13 +3,13 @@ import "firebase/auth"
 import 'firebase/firestore'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBvtHZVKBeY6btKmkg3AzfrjTLtJkBW89M",
-  authDomain: "browserai.firebaseapp.com",
-  projectId: "browserai",
-  storageBucket: "browserai.appspot.com",
-  messagingSenderId: "607449644721",
-  appId: "1:607449644721:web:93de34b8c823893b0aac90",
-  measurementId: "G-BFXWGXSZHG"
+  apiKey: process.env.apiKey,
+  authDomain: process.env.authDomain,
+  projectId: process.env.projectId,
+  storageBucket: process.env.storageBucket,
+  messagingSenderId: process.env.messagingSenderId,
+  appId: process.env.appId,
+  measurementId: process.env.measurementId
 };
 
 // Initialize Firebase
