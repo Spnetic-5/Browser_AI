@@ -123,7 +123,7 @@ app.get("/api/checkAuthStatus", async (req, res) => {
 
     if (user) {
       // User is authenticated
-      res.json({ user: user });
+      res.json({ user: user.toJSON() }); // Convert user to JSON before sending
     } else {
       // User is not authenticated
       res.json({ user: null });
@@ -143,7 +143,6 @@ app.post("/api/signup", async (req, res) => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       unsubscribe(); // Unsubscribe immediately after getting the user data
       res.json({ user: user });
-      resolve(user);
       console.log()
     });    
   } catch (error) {
@@ -162,7 +161,6 @@ app.post("/api/login", async (req, res) => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       unsubscribe(); // Unsubscribe immediately after getting the user data
       res.json({ user: user });
-      resolve(user);
     });    
     
   } catch (error) {

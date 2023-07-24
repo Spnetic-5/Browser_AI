@@ -162,7 +162,7 @@ export default function Dashboard() {
             <Card>
               <Card.Body>
                 <h2 className="text-center mb-4 text-2xl font-semibold">Your Prompts 📑️</h2>
-                {promptsLoading ? (
+                {prompts.length > 0 ? (
                   <ul>
                     {prompts?.map((prompt) => (
                       <li key={prompt.id} className="mb-2">
