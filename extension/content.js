@@ -1,7 +1,4 @@
 
-const apiKey = "<Firebase_API_Key>";
-const projectId = "<Firebase_ProjectID>";
-const collectionName = "<Firebase_Collection>"
 var promptList = [];
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
@@ -25,33 +22,34 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
   selectedTextElement.value = message.info.selectionText;
 
-  fetch(
-    `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/${collectionName}?key=${apiKey}`
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      const documents = data.documents;
-      const allPrompts = documents.map((doc) => doc.fields);
-      const validPrompts = allPrompts.filter((prompt) => prompt?.title?.stringValue && prompt?.description?.stringValue);
-
-      if (message.browserAIEmail) {
-        promptList = validPrompts.filter((prompt) => prompt?.email.stringValue === message.browserAIEmail);
-      } else {
-        promptList = [];
+  async function fetchDataAndPopulateDropdown() {
+    try {
+      const response = await fetch(`http://localhost:3000/api/getData?userEmail=${message?.browserAIEmail}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
       }
+  
+      const data = await response.json();
+      const prompts = data?.data;
+      const validPrompts = prompts?.filter((prompt) => prompt?.title && prompt?.description);
 
-      // Populate the dropdown with the filtered prompts
-      promptElement.innerHTML = `
+      if (validPrompts.length > 0) {
+        promptList = validPrompts;
+        promptElement.innerHTML = `
         <option value="new-prompt">Write a new prompt</option>
         ${promptList
-          .map((prompt) => `<option value="${prompt.description.stringValue}">${prompt.title.stringValue}</option>`)
+          .map((prompt) => `<option value="${prompt.description}">${prompt.title}</option>`)
           .join("")}
       `;
-    })
-    .catch((error) => {
-      console.error("Error getting data from Firestore:", error);
+      }
+    } catch (error) {
+      console.error("Error getting data from the server:", error);
       console.log(error);
-    });
+    }
+  }
+  
+  // Call the function to fetch data and populate the dropdown
+  fetchDataAndPopulateDropdown();
 
   if (message.browserAIEmail) {
     promptList = promptList.filter((prompt) => prompt.email.stringValue === message.browserAIEmail);

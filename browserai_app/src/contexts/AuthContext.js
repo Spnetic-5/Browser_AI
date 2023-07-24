@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react"
-import { auth } from "../server"
+import axios from "axios";
+import {auth} from "../server.js"
 
 const AuthContext = React.createContext()
 
@@ -11,31 +12,50 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
   const [loading, setLoading] = useState(true)
 
-  function signup(email, password) {
-    console.log(email, password)
+  // Your server's API endpoints
+  const API_BASE_URL = "http://localhost:3000/api";
+
+  async function signup(email, password) {
     try {
-      auth.createUserWithEmailAndPassword(email, password);
-      // User successfully created.
+      const response = await axios.post(`${API_BASE_URL}/signup`, {
+        email,
+        password,
+      });
+      setCurrentUser(response.data.user);
     } catch (error) {
-      // Handle the error here
       console.error("Error creating user:", error.message);
-      console.log(error.message);
-      throw error; // Rethrow the error to be caught by the caller of this function if needed.
+      throw error;
     }
-    
-    // return auth.createUserWithEmailAndPassword(email, password)
   }
 
-  function login(email, password) {
-    return auth.signInWithEmailAndPassword(email, password)
+  async function login(email, password) {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/login`, {
+        email,
+        password,
+      });
+      console.log("Login successful:", response.data);
+      setCurrentUser(response.data.user);
+    } catch (error) {
+      console.error("Error logging in:", error.message);
+      throw error;
+    }
   }
 
-  function logout() {
-    return auth.signOut()
+  async function logout() {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/logout`);
+      console.log("Logout successful:", response.data);
+      setCurrentUser(null); // Clear the current user from state after logout
+    } catch (error) {
+      console.error("Error logging out:", error.message);
+      throw error;
+    }
   }
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
+      console.log(user);
       setCurrentUser(user)
       setLoading(false)
     })
@@ -43,11 +63,13 @@ export function AuthProvider({ children }) {
     return unsubscribe
   }, [])
 
+
   const value = {
     currentUser,
     login,
     signup,
     logout,
+    loading
   }
 
   return (

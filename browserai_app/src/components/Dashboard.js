@@ -63,7 +63,7 @@ export default function Dashboard() {
       .catch((error) => alert(error.message));
   };
 
-  
+
   // CREATE OR UPDATE 
   const createOrUpdatePrompt = () => {
     if (title && description && currentUser) {
@@ -162,25 +162,30 @@ export default function Dashboard() {
             <Card>
               <Card.Body>
                 <h2 className="text-center mb-4 text-2xl font-semibold">Your Prompts 📑️</h2>
-                <ul>
-                  {prompts?.map((prompt) => (
-                    <li key={prompt.id} className="mb-2">
-                      <div className="border p-4 rounded-md shadow-md">
-                        <h4 className="font-semibold text-xl">{prompt.title}</h4>
-                        <p className="text-gray-600">{prompt.description}</p>
-                        {/* {prompt.responses && <p className="text-gray-600">{prompt.responses}</p>} */}
-                        <div className="button-container-update">
-                          <Button variant="success" className="mr-2" onClick={() => handleUpdate(prompt.id)}>
-                            Update
-                          </Button>
-                          <Button variant="danger" className="mr-2" onClick={() => deletePrompt(prompt.id)}>
-                            Delete
-                          </Button>
+                {promptsLoading ? (
+                  <ul>
+                    {prompts?.map((prompt) => (
+                      <li key={prompt.id} className="mb-2">
+                        <div className="border p-4 rounded-md shadow-md">
+                          <h4 className="font-semibold text-xl">{prompt.title}</h4>
+                          <p className="text-gray-600">{prompt.description}</p>
+                          {/* {prompt.responses && <p className="text-gray-600">{prompt.responses}</p>} */}
+                          <div className="button-container-update">
+                            <Button variant="success" className="mr-2" onClick={() => handleUpdate(prompt.id)}>
+                              Update
+                            </Button>
+                            <Button variant="danger" className="mr-2" onClick={() => deletePrompt(prompt.id)}>
+                              Delete
+                            </Button>
+                          </div>
                         </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <h4 className="text-center mb-4 text-2xl font-semibold">You have not added prompts yet!</h4>
+                )
+                }
               </Card.Body>
             </Card>
           )}
