@@ -113,7 +113,14 @@ export default function Dashboard() {
   }
 
   return (
+
     <div className="container mx-auto p-4">
+       <div className="logout-container">
+      <h4 className="text-center m-4 font-semibold">{currentUser.email}</h4>
+        <Button variant="outline-primary" onClick={handleLogout}>
+          Log Out
+        </Button>
+      </div>
       <h1 className="heading text-center text-4xl font-bold mb-4">BrowserAi: ChatGPT Promts</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Left side - Card with Form */}
@@ -190,12 +197,6 @@ export default function Dashboard() {
             </Card>
           )}
         </div>
-      </div>
-      <div className="logout-container">
-        <Button variant="outline-primary" onClick={handleLogout}>
-          Log Out
-        </Button>
-
       </div>
     </div>
   );

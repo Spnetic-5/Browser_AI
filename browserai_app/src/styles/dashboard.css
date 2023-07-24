@@ -25,13 +25,14 @@ body {
   }
   
 .heading {
-    font-size: 4rem; /* Increase the font size */
+  font-size: 4rem; /* Increase the font size */
   font-weight: bold; /* Set font weight to bold */
   text-align: center; /* Center the text */
   background-clip: text; /* Set the background-clip to text for the gradient effect */
   -webkit-background-clip: text; /* For Safari/Chrome */
   color: transparent; /* Make the text transparent to reveal the gradient */
   background-image: linear-gradient(to right, #FFA000, #FF99CC); /* Add a gradient to the text */
+  margin-top: 7%;
   }
 
   /* #FF8E53 10%, #FFA000  */
@@ -193,18 +194,30 @@ body {
     justify-content: left;
   }
 
-/* Logout Container */
-.logout-container {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-  }
-  
+  /* Logout Container */
+  .logout-container {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: row;
+      /* margin: 50px; */
+    }
+
+  .logout-container h4 {
+      color: #666;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
   .logout-container button {
     font-size: 16px;
     font-weight: bold;
     font-family: 'DM Sans', sans-serif; 
     border-radius: 12px;
+    border-color: red;
     color: red;
     padding: 8px 12px;
+    margin: 10px;
   }
