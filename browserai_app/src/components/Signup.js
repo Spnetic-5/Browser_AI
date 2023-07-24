@@ -215,12 +215,14 @@ export default function Signup() {
           <Typography style={styles.description}>
             {description}
           </Typography>
-          <Button
-            style={styles.addToChromeButton}
-            disableElevation
-          >
-            Add to Chrome - Now ! ✨️
-          </Button>
+          <a href="https://github.com/Spnetic-5/Browser_AI" target="_blank" rel="noopener noreferrer">
+            <Button
+              style={styles.addToChromeButton}
+              disableElevation
+            >
+              Add to Chrome - Now ! ✨️
+            </Button>
+          </a>
         </div>
 
         <div className={classes.rightContent}>

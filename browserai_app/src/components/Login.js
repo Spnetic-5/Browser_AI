@@ -198,10 +198,10 @@ export default function Signup() {
         <div className={classes.leftContent}>
           <div className={classes.header}>
             <Typography style={styles.title}>
-            BrowserAI
+              BrowserAI
             </Typography>
             <span style={styles.emoji}>
-             🚀️
+              🚀️
             </span>
           </div>
           <Typography style={styles.slogan}>
@@ -210,12 +210,14 @@ export default function Signup() {
           <Typography style={styles.description}>
             {description}
           </Typography>
-          <Button
-            style={styles.addToChromeButton}
-            disableElevation
-          >
-            Add to Chrome - Now ! ✨️
-          </Button>
+          <a href="https://github.com/Spnetic-5/Browser_AI" target="_blank" rel="noopener noreferrer">
+            <Button
+              style={styles.addToChromeButton}
+              disableElevation
+            >
+              Add to Chrome - Now ! ✨️
+            </Button>
+          </a>
         </div>
 
         <div className={classes.rightContent}>
@@ -261,6 +263,6 @@ export default function Signup() {
 
         </div>
       </div>
-    </div>
+    </div >
   );
 };
