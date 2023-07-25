@@ -1,5 +1,7 @@
 # Browser_AI 🚀️
 
+![Demo](./browserai_app/src/assets/demo.png)
+
 BrowserAI is a powerful Chrome extension that allows you to enhance your selected text with AI-powered prompts. Whether you want to improve your writing, generate creative responses, or save time crafting replies, BrowserAI has got you covered. With seamless integration and easy-to-use prompts, take your text to the next level effortlessly.
 
 ## Installation 📑️
@@ -34,6 +36,49 @@ Before using the extension, you'll need to provide your OpenAI API key. To do th
      - "Generate" button to start applying the prompt on text and start generation process.
      - If "Write new prompt" is selected, a text area will appear to enter a custom prompt.
      - You can copy the generated response just by clicking on the popup.
+
+
+## Techstack 👩‍💻️
+
+### Frontend
+
+- React.js: A popular JavaScript library for building user interfaces.
+- Axios: A promise-based HTTP client for making API requests.
+- React Router: A library for handling routing in a React application.
+- Tailwind CSS: A utility-first CSS framework for rapidly building custom designs.
+
+
+### Backend
+
+- Node.js: A JavaScript runtime environment for server-side development.
+- Express.js: A minimalistic web application framework for Node.js.
+- Firebase: A cloud-based platform for building web and mobile applications with serverless architecture.
+
+### Database
+
+- Firebase Firestore: A NoSQL database used for storing and querying data in real-time.
+
+### AI Integration
+
+- OpenAI GPT-3: A powerful language model by OpenAI used for generating AI-powered prompts.
+
+### Deployment
+
+- Render: A cloud platform for deploying and scaling applications and static sites.
+- Netlify: A cloud platform for deploying and hosting web applications and static sites.
+
+
+### Development Tools
+
+- Git: A distributed version control system for tracking changes in code.
+- GitHub: A web-based hosting service for version control and collaboration.
+- Visual Studio Code: A popular code editor with a rich set of features and extensions.
+- Postman: A tool for testing and documenting APIs.
+
+
+## Demo Video 📹️
+
+  ![BrowserAI](./browserai_app/src/assets/demo.mp4)
 
 
 
