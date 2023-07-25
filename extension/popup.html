@@ -19,13 +19,14 @@
         BrowserAI
       </h1>
       <!-- Hide login elements for logged-in users -->
-      <div id="login-container" class="mb-4">
+      <form id="login-container" class="mb-4">
         <label for="api-key-input" class="block font-semibold mb-1">OpenAI API Key:</label>
         <input
           type="password"
           id="api-key-input"
           class="w-full border rounded py-2 px-3"
           placeholder="Enter your OpenAI API Key"
+          required
         />
         <label class="block font-semibold mt-2 mb-1">BrowserAI Email ID (optional)</label>
         <input
@@ -46,10 +47,10 @@
         <button
           id="save-api-key"
           class="w-full bg-green-500 text-white font-semibold py-2 px-4 mt-4 rounded focus:outline-none focus:shadow-outline"
-        >
+          >
           Login
         </button>
-      </div>
+      </form>
       <div id="feedback-container" class="text-center text-red-500">You are not Logged In!</div>
       <!-- End of login elements -->    
 

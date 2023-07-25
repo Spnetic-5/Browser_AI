@@ -33,12 +33,12 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
       const prompts = data?.data;
       const validPrompts = prompts?.filter((prompt) => prompt?.title && prompt?.description);
 
-      if (validPrompts.length > 0) {
+      if (validPrompts.length > 0 && message?.browserAIEmail) {
         promptList = validPrompts;
         promptElement.innerHTML = `
         <option value="new-prompt">Write a new prompt</option>
         ${promptList
-          .map((prompt) => `<option value="${prompt.description}">${prompt.title}</option>`)
+          .map((prompt) => `<option value="${prompt?.description}">${prompt?.title}</option>`)
           .join("")}
       `;
       }

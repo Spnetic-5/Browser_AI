@@ -43,17 +43,27 @@ saveApiKeyButton.addEventListener("click", function () {
     const apiKey = document.getElementById("api-key-input").value;
     const baiEmail = document.getElementById("email").value;
     const baiPass = document.getElementById("pass").value;
-    chrome.storage.sync.set({ "chatGPT_api_key": apiKey }, function () {
-        console.log(apiKey, "API key saved");
-    });
-    chrome.storage.sync.set({ "browserAIEmail": baiEmail }, function () {
-        console.log(baiEmail, "Email saved");
-    });
-    chrome.storage.sync.set({ "browserAIPassword": baiPass }, function () {
-        console.log(baiPass, "Password saved");
-    });
-    feedbackContainer.innerText = "You have Logged In successfully ✅️";
-    feedbackContainer.classList.remove("text-red-500");
-    feedbackContainer.classList.add("text-green-500");
-});
 
+    if (apiKey) {
+        chrome.storage.sync.set({ "chatGPT_api_key": apiKey }, function () {
+            console.log(apiKey, "API key saved");
+        });
+        feedbackContainer.innerText = "You have Logged In successfully ✅️";
+        feedbackContainer.classList.remove("text-red-500");
+        feedbackContainer.classList.add("text-green-500");
+    }
+    else {
+        feedbackContainer.innerText = "Enter OpenAI API Key to Login!";
+        feedbackContainer.classList.remove("text-green-500");
+        feedbackContainer.classList.add("text-red-500");
+    }
+
+    if (baiEmail && baiPass) {
+        chrome.storage.sync.set({ "browserAIEmail": baiEmail }, function () {
+            console.log(baiEmail, "Email saved");
+        });
+        chrome.storage.sync.set({ "browserAIPassword": baiPass }, function () {
+            console.log(baiPass, "Password saved");
+        });
+    }
+});
