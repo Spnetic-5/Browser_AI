@@ -78,7 +78,7 @@ Before using the extension, you'll need to provide your OpenAI API key. To do th
 
 ## Demo Video 📹️
 
-  ![BrowserAI](./browserai_app/src/assets/demo.mp4)
+> [BrowserAI](https://youtu.be/LrWPbi3zYr4)
 
 
 
