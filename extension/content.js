@@ -24,7 +24,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
 
   async function fetchDataAndPopulateDropdown() {
     try {
-      const response = await fetch(`http://localhost:3000/api/getData?userEmail=${message?.browserAIEmail}`);
+      const response = await fetch(`https://browserai.onrender.com/api/getData?userEmail=${message?.browserAIEmail}`);
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Card, Button } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
@@ -15,7 +15,7 @@ export default function Dashboard() {
   const [promptToUpdate, setPromptToUpdate] = useState(null);
   const history = useHistory();
 
-  const API_BASE_URL = "http://localhost:3000/api";
+  const API_BASE_URL = "https://browserai.onrender.com/api";
 
   const handleUpdate = (id) => {
     const promptToUpdate = prompts.find((prompt) => prompt.id === id);
@@ -36,28 +36,29 @@ export default function Dashboard() {
     }
   };
 
+  const fetchPrompts = useCallback(async () => {
+    try {
+      const response = await axios.get(`${API_BASE_URL}/prompts?userEmail=${currentUser.email}`);
+      setPrompts(response.data);
+      setPromptsLoading(false);
+    } catch (error) {
+      console.error("Error fetching prompts:", error);
+      setPromptsLoading(false);
+    }
+  }, [currentUser]);
+
   // READ
   useEffect(() => {
-    const fetchPrompts = async () => {
-      try {
-        const response = await axios.get(`${API_BASE_URL}/prompts?userEmail=${currentUser.email}`);
-        setPrompts(response.data);
-        setPromptsLoading(false);
-      } catch (error) {
-        console.error("Error fetching prompts:", error);
-        setPromptsLoading(false);
-      }
-    };
-
     if (currentUser) {
       fetchPrompts();
     }
-  }, [currentUser]);
+  }, [currentUser, fetchPrompts]);
 
   // DELETE
   const deletePrompt = async (id) => {
     try {
       await axios.delete(`${API_BASE_URL}/prompts/${id}`);
+      fetchPrompts();
     } catch (error) {
       console.error("Error deleting prompt:", error);
       alert("Error deleting prompt.");
@@ -76,6 +77,7 @@ export default function Dashboard() {
             title: title,
             description: description,
           });
+          fetchPrompts();
         } else {
           // Perform create operation
           await axios.post(`${API_BASE_URL}/prompts`, {
@@ -83,6 +85,7 @@ export default function Dashboard() {
             title: title,
             description: description,
           });
+          fetchPrompts();
         }
 
         // Reset form fields and promptToUpdate state after create/update

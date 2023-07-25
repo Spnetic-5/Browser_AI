@@ -16,7 +16,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
 
   // Your server's API endpoints
-  const API_BASE_URL = "http://localhost:3000/api";
+  const API_BASE_URL = "https://browserai.onrender.com/api";
 
   async function signup(email, password) {
     return axios.post(`${API_BASE_URL}/signup`, {
