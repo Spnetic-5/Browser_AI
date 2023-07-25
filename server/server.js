@@ -4,7 +4,6 @@ import 'firebase/firestore/dist/index.cjs.js'
 import 'firebase/auth/dist/index.cjs.js'
 import express from "express";
 import cors from "cors";
-import admin from 'firebase-admin';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -57,6 +56,7 @@ app.get("/api/getData", async (req, res) => {
 
 // READ
 app.get("/api/prompts", async (req, res) => {
+  const { userEmail } = req.query;
   try {
     const snapshot = await db
       .collection("prompts")
@@ -66,12 +66,56 @@ app.get("/api/prompts", async (req, res) => {
     const prompts = snapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
-    }));
+    }))
+    .filter((prompt) => prompt.email === userEmail);
 
     res.json(prompts);
   } catch (error) {
     console.error("Error fetching prompts from Firestore:", error);
     res.status(500).json({ error: "Error fetching prompts from Firestore" });
+  }
+});
+
+// CREATE / UPDATE
+app.post("/api/prompts/:id?", async (req, res) => {
+  const { id } = req.params;
+  const { email, title, description } = req.body;
+
+  // Check if email is provided (mandatory for both create and update)
+  if (!email) {
+    return res.status(400).json({ error: "Email is mandatory." });
+  }
+
+  const data = {
+    email,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+  };
+
+  // If title and description are provided, add them to the data
+  if (title) {
+    data.title = title;
+  }
+
+  if (description) {
+    data.description = description;
+  }
+
+  try {
+    if (id) {
+      // Update operation
+      await db.collection("prompts").doc(id).set(data, { merge: true });
+      res.json({ message: "Prompt updated successfully." });
+    } else {
+      // Create operation
+      if (!title || !description) {
+        return res.status(400).json({ error: "Title and description are mandatory for prompt creation." });
+      }
+      const docRef = await db.collection("prompts").add(data);
+      res.json({ message: "Prompt created successfully.", id: docRef.id });
+    }
+  } catch (error) {
+    console.error("Error creating/updating prompt in Firestore:", error);
+    res.status(500).json({ error: "Error creating/updating prompt in Firestore" });
   }
 });
 
@@ -85,30 +129,6 @@ app.delete("/api/prompts/:id", async (req, res) => {
   } catch (error) {
     console.error("Error deleting prompt from Firestore:", error);
     res.status(500).json({ error: "Error deleting prompt from Firestore" });
-  }
-});
-
-// CREATE OR UPDATE
-app.post("/api/prompts", async (req, res) => {
-  const { email, title, description } = req.body;
-
-  if (!email || !title || !description) {
-    return res.status(400).json({ error: "All fields are mandatory." });
-  }
-
-  const data = {
-    email,
-    title,
-    description,
-    timestamp: admin.firestore.FieldValue.serverTimestamp(),
-  };
-
-  try {
-    const docRef = await db.collection("prompts").add(data);
-    res.json({ message: "Prompt created successfully.", id: docRef.id });
-  } catch (error) {
-    console.error("Error creating prompt in Firestore:", error);
-    res.status(500).json({ error: "Error creating prompt in Firestore" });
   }
 });
 

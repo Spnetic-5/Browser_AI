@@ -205,7 +205,7 @@ export default function Signup() {
             <Typography style={styles.title}>
               BrowserAI
             </Typography>
-            <span style={styles.emoji}>
+            <span role="img" aria-label="Rocket" style={styles.emoji}>
               🚀️
             </span>
           </div>
@@ -220,8 +220,8 @@ export default function Signup() {
               style={styles.addToChromeButton}
               disableElevation
             >
-              Add to Chrome - Now ! ✨️
-            </Button>
+              Add to Chrome - Now ! <span role="img" aria-label="star"> ✨️ </span>
+             </Button>
           </a>
         </div>
 

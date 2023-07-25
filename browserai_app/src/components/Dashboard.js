@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
-import firebase from 'firebase';
 import "../styles/dashboard.css";
-import { auth, db } from '../server'
+import axios from "axios";
 
 export default function Dashboard() {
   const [error, setError] = useState("");
@@ -15,6 +14,8 @@ export default function Dashboard() {
   const [promptsLoading, setPromptsLoading] = useState(true);
   const [promptToUpdate, setPromptToUpdate] = useState(null);
   const history = useHistory();
+
+  const API_BASE_URL = "http://localhost:3000/api";
 
   const handleUpdate = (id) => {
     const promptToUpdate = prompts.find((prompt) => prompt.id === id);
@@ -37,73 +38,65 @@ export default function Dashboard() {
 
   // READ
   useEffect(() => {
-    const unsubscribe = db
-      ?.collection('prompts')
-      .orderBy('timestamp', 'desc')
-      .onSnapshot((snapshot) => {
-        const userPrompts = snapshot.docs
-          .map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }))
-          .filter((prompt) => prompt.email === currentUser.email);
-
-        setPrompts(userPrompts);
+    const fetchPrompts = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/prompts?userEmail=${currentUser.email}`);
+        setPrompts(response.data);
         setPromptsLoading(false);
-      });
-    return unsubscribe
-  }, [currentUser])
+      } catch (error) {
+        console.error("Error fetching prompts:", error);
+        setPromptsLoading(false);
+      }
+    };
 
+    if (currentUser) {
+      fetchPrompts();
+    }
+  }, [currentUser]);
 
-  // DELETE 
+  // DELETE
   const deletePrompt = async (id) => {
-    await db?.collection('prompts')
-      .doc(id)
-      .delete()
-      .catch((error) => alert(error.message));
+    try {
+      await axios.delete(`${API_BASE_URL}/prompts/${id}`);
+    } catch (error) {
+      console.error("Error deleting prompt:", error);
+      alert("Error deleting prompt.");
+    }
   };
 
-
-  // CREATE OR UPDATE 
-  const createOrUpdatePrompt = () => {
+  // CREATE OR UPDATE
+  const createOrUpdatePrompt = async () => {
     if (title && description && currentUser) {
-      // setPromptsLoading(true);
+      try {
 
-      if (promptToUpdate) {
-        // Perform update operation
-        db.collection('prompts')
-          .doc(promptToUpdate.id)
-          .update({
-            title: title,
-            description: description,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-          })
-          .then(() => {
-            // Reset form fields and promptToUpdate state after update
-            clearInputFields();
-            setPromptToUpdate(null);
-          })
-          .catch((error) => alert(error.message));
-      } else {
-        // Perform create operation
-        db.collection('prompts')
-          .add({
+        if (promptToUpdate) {
+          // Perform update operation
+          await axios.post(`${API_BASE_URL}/prompts/${promptToUpdate.id}`, {
             email: currentUser.email,
             title: title,
             description: description,
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-          })
-          .then(() => {
-            // Reset form fields after create
-            clearInputFields();
-          })
-          .catch((error) => alert(error.message));
+          });
+        } else {
+          // Perform create operation
+          await axios.post(`${API_BASE_URL}/prompts`, {
+            email: currentUser.email,
+            title: title,
+            description: description,
+          });
+        }
+
+        // Reset form fields and promptToUpdate state after create/update
+        clearInputFields();
+      } catch (error) {
+        console.error("Error creating/updating prompt:", error);
+        alert("Error creating/updating prompt.");
       }
     } else {
-      alert('All fields are mandatory');
+      alert("All fields are mandatory");
       setPromptsLoading(false);
     }
   };
+
 
   const clearInputFields = () => {
     setDescription('')
@@ -164,11 +157,11 @@ export default function Dashboard() {
         {/* Right side - Prompts Cards List */}
         <div className="prompts-list">
           {promptsLoading ? (
-            <h4 className="text-center m-4 text-2xl font-semibold">Loading your prompts . . .📑️</h4>
+            <h4 className="text-center m-4 text-2xl font-semibold">Loading your prompts . . . <span role="img" aria-label="doc"> 📑️ </span></h4>
           ) : (
             <Card>
               <Card.Body>
-                <h2 className="text-center mb-4 text-2xl font-semibold">Your Prompts 📑️</h2>
+                <h2 className="text-center mb-4 text-2xl font-semibold">Your Prompts <span role="img" aria-label="list"> 📑️ </span></h2>
                 {prompts.length > 0 ? (
                   <ul>
                     {prompts?.map((prompt) => (
