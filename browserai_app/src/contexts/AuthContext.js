@@ -70,7 +70,7 @@ export function AuthProvider({ children }) {
     // Function to check user's authentication status on the server
     async function checkAuthStatus() {
       try {
-        const response = await axios.get(`${API_BASE_URL}/checkAuthStatus`);
+        await axios.get(`${API_BASE_URL}/checkAuthStatus`);
         setLoading(false);
       } catch (error) {
         console.error("Error checking authentication status:", error.message);
