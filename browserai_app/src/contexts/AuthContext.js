@@ -10,9 +10,12 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(() => {
     // Get the user from local storage on initial load
-    const user = localStorage.getItem("currentUser");
+    const user = sessionStorage.getItem("currentUser");
     return user ? JSON.parse(user) : null;
   });
+
+  console.log(currentUser)
+
   const [loading, setLoading] = useState(true)
 
   // Your server's API endpoints
@@ -25,7 +28,7 @@ export function AuthProvider({ children }) {
     })
     .then(response => {
       setCurrentUser(response.data.user);
-      localStorage.setItem("currentUser", JSON.stringify(response.data.user));
+      sessionStorage.setItem("currentUser", JSON.stringify(response.data.user));
       return response;
     })
     .catch(error => {
@@ -42,7 +45,7 @@ export function AuthProvider({ children }) {
     .then(response => {
       console.log("Login successful:", response.data);
       setCurrentUser(response.data.user);
-      localStorage.setItem("currentUser", JSON.stringify(response.data.user));
+      sessionStorage.setItem("currentUser", JSON.stringify(response.data.user));
       return response;
     })
     .catch(error => {
@@ -56,7 +59,7 @@ export function AuthProvider({ children }) {
       const response = await axios.post(`${API_BASE_URL}/logout`);
       console.log("Logout successful:", response.data);
       setCurrentUser(null); // Clear the current user from state after logout
-      localStorage.removeItem("currentUser");
+      sessionStorage.removeItem("currentUser");
     } catch (error) {
       console.error("Error logging out:", error.message);
       throw error;
@@ -68,7 +71,6 @@ export function AuthProvider({ children }) {
     async function checkAuthStatus() {
       try {
         const response = await axios.get(`${API_BASE_URL}/checkAuthStatus`);
-        setCurrentUser(response.data.user);
         setLoading(false);
       } catch (error) {
         console.error("Error checking authentication status:", error.message);
